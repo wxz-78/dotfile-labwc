@@ -1,49 +1,35 @@
-# Dotfiles de Artix Linux (dinit + labwc + Wayland)
+# Dotfiles — Artix Linux + labwc
 
-Este repositorio contiene mi configuración personal ("dotfiles") para un entorno de escritorio minimalista y moderno en **Artix Linux**, usando **dinit** como sistema de inicio, **BTRFS** como sistema de archivos y **labwc** como compositor de Wayland.
+Este repositorio contiene las configuraciones de usuario (dotfiles) para un entorno de escritorio **Wayland** minimalista basado en **labwc** sobre **Artix Linux**.
 
-Además de los archivos de configuración, incluyo los scripts necesarios para realizar la instalación base del sistema operativo.
+Es el complemento perfecto para los scripts de instalación base ([install-artix](https://github.com/tu-usuario/install-artix)). Mientras que los scripts instalan el sistema operativo y los paquetes necesarios, este repositorio se encarga de la apariencia, los atajos de teclado y el comportamiento de tu escritorio.
 
-## 📂 Contenido del Repositorio
+## 🖼️ Vista Previa
 
-La carpeta principal de configuraciones (`dotfiles/`) contiene:
+Aquí puedes ver cómo se ve el entorno en acción:
 
-### Interfaz y Entorno Wayland
-*   **`labwc/`**: Configuración del compositor (rc.xml, menu.xml, autostart, environment).
-*   **`waybar/`**: Barra de estado, módulos y estilos CSS.
-*   **`wofi/`**: Lanzador de aplicaciones.
-*   **`mako/`**: Demonio de notificaciones.
-*   **`swaylock/`**: Bloqueo de pantalla.
-*   **`wlogout/`**: Menú de apagado/salida.
-*   **`gtk-3.0` y `gtk-4.0`**: Configuración de temas e iconos para aplicaciones GTK.
-*   **`foot/`**: Configuración del emulador de terminal.
+![Vista previa del entorno labwc](visual.png)
 
-### Herramientas y Shell
-*   **`btop/`**: Monitor de recursos del sistema.
-*   **`fastfetch/`**: Información del sistema al abrir la terminal.
-*   **`.bashrc` y `.bash_profile`**: Configuración del shell Bash (aliases, variables de entorno, prompt).
+## 📦 Contenido del Repositorio
 
-### Instalación del Sistema
-*   **`01-instalacion-base.sh`**: Script para el particionado, formateo e instalación base de Artix Linux.
-*   **`02-post-instalacion.sh`**: Script para la configuración del sistema, instalación de paquetes (drivers, entorno Wayland, utilidades) y configuración de servicios.
-*   **`lnk/` o `install...`**: Scripts o directorios utilizados para desplegar/enlazar estos dotfiles a sus ubicaciones finales (`~/.config`).
+A continuación se detalla qué configuración encontrarás en cada carpeta:
+
+*   **`labwc/`**: Configuración del compositor Wayland (atajos de teclado, decoraciones de ventanas, reglas, autostart).
+*   **`waybar/`**: Barra de estado superior/inferior (módulos, colores, fuentes y scripts).
+*   **`wofi/`**: Lanzador de aplicaciones (estilo visual y configuración).
+*   **`foot/`**: Emulador de terminal (fuentes, colores, opacidad, atajos).
+*   **`mako/`**: Daemon de notificaciones (posición, tiempo de espera, estilos).
+*   **`swaylock/`**: Bloqueo de pantalla (imagen de fondo, colores, efectos).
+*   **`wlogout/`**: Menú de cierre de sesión (estilo, botones, distribución).
+*   **`btop/`**: Monitor de recursos del sistema (tema, diseño).
+*   **`fastfetch/`**: Herramienta de información del sistema (logo, módulos, colores).
+*   **`gtk-3.0/` y `gtk-4.0/`**: Configuración de temas, iconos y fuentes para aplicaciones GTK.
+*   **`lnk/`**: Carpeta para scripts personalizados o enlaces simbólicos adicionales.
 
 ## 🛠️ Requisitos Previos
 
-Este entorno está diseñado para funcionar sobre una instalación limpia de **Artix Linux** con las siguientes características:
-*   Sistema de inicio: `dinit`.
-*   Gestión de sesión: `elogind` (NO `seatd` ni `turnstile`).
-*   Arranque UEFI.
-*   Sistema de archivos BTRFS (con subvolúmenes).
+Para que estas configuraciones funcionen correctamente, asegúrate de tener instalados los paquetes necesarios. Si usaste el script `02-post-instalacion.sh` del repositorio `install-artix`, ya deberías tenerlos todos.
 
-## 🚀 Instalación
-
-### Paso 1: Instalar el Sistema Operativo (Opcional)
-
-Si estás partiendo de cero, usa los scripts incluidos en este repositorio. Arranca desde un Live USB de Artix Linux y ejecuta:
-
+Si no es así, instálalos con:
 ```bash
-# 1. Dar permisos de ejecución
-chmod +x 01-instalacion-base.sh
-# 2. Ejecutar instalación base (te pedirá el disco y datos del usuario)
-./01-instalacion-base.sh
+sudo pacman -S labwc waybar wofi foot mako swaylock wlogout btop fastfetch
