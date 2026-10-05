@@ -1,0 +1,87 @@
+/* ============================================================
+   INK · wofi
+   Panel oscuro de tinta con campo de búsqueda tipo "sello".
+   ============================================================ */
+
+* {
+    font-family: "JetBrainsMono Nerd Font", "DejaVuSansM Nerd Font", monospace;
+    font-size: 14px;
+}
+
+/* Sin box-shadow: en una superficie layer-shell se recorta y no se ve */
+window {
+    background: rgba(6, 6, 6, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 18px;
+}
+
+#outer-box {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+}
+
+#input {
+    margin: 14px 14px 8px 14px;
+    padding: 8px 14px;
+    background: rgba(255, 255, 255, 0.06);
+    background-image: none;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 12px;
+    box-shadow: none;
+    color: #f2f2f2;
+    caret-color: #ffffff;
+    transition: border-color 120ms ease-in-out;
+}
+
+#input:focus {
+    border-color: rgba(255, 255, 255, 0.40);
+    box-shadow: none;
+}
+
+#input image {
+    color: #888888;
+}
+
+#inner-box {
+    margin: 0 10px 10px 10px;
+    background: transparent;
+}
+
+#scroll {
+    margin: 0 4px;
+}
+
+/* Borde transparente en reposo: al seleccionar solo cambia el color
+   y la lista no "salta" (antes se usaba outline) */
+#entry {
+    padding: 8px 10px;
+    margin: 2px 4px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background: transparent;
+    background-image: none;
+}
+
+#entry:selected {
+    background: rgba(255, 255, 255, 0.10);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+#text {
+    color: #d8d8d8;
+    padding: 2px 6px;
+}
+
+#entry:selected #text {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+#entry image {
+    -gtk-icon-effect: dim;
+}
+
+#entry:selected image {
+    -gtk-icon-effect: none;
+}

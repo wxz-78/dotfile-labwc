@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<labwc_config>
+
+  <core>
+    <gap>8</gap>
+    <adaptiveSync>yes</adaptiveSync>
+    <reuseOutputMode>yes</reuseOutputMode>
+  </core>
+
+  <theme>
+    <!-- Carpeta ~/.local/share/themes/Ink/labwc/ (themerc + *.xbm) -->
+    <name>Ink</name>
+    <cornerRadius>12</cornerRadius>
+    <!-- Sin esto las sombras definidas en themerc no se dibujan -->
+    <dropShadows>yes</dropShadows>
+    <font>
+      <name>JetBrainsMono Nerd Font</name>
+      <size>10</size>
+    </font>
+    <font place="OnScreenDisplay">
+      <name>JetBrainsMono Nerd Font</name>
+      <size>11</size>
+    </font>
+  </theme>
+
+  <windowSwitcher show="yes" preview="yes" outlines="yes" allWorkspaces="no"/>
+
+  <!-- Sin esto, W-1..W-4 no hacen nada: por defecto labwc solo crea 1 escritorio -->
+  <desktops number="4">
+    <names>
+      <name>1</name>
+      <name>2</name>
+      <name>3</name>
+      <name>4</name>
+    </names>
+    <popupTime>800</popupTime>
+  </desktops>
+
+  <!-- Touchpad -->
+  <libinput>
+    <device category="touchpad">
+      <tap>yes</tap>
+      <tapAndDrag>yes</tapAndDrag>
+      <disableWhileTyping>yes</disableWhileTyping>
+    </device>
+  </libinput>
+
+  <keyboard>
+    <default/>
+
+    <!-- Aplicaciones principales -->
+    <keybind key="W-Return">
+      <action name="Execute"><command>foot</command></action>
+    </keybind>
+    <keybind key="W-d">
+      <action name="Execute"><command>wofi --show drun</command></action>
+    </keybind>
+    <keybind key="W-e">
+      <action name="Execute"><command>foot -e yazi</command></action>
+    </keybind>
+    <keybind key="W-b">
+      <action name="Execute"><command>librewolf</command></action>
+    </keybind>
+    <keybind key="W-v">
+      <action name="Execute"><command>cliphist list | wofi --dmenu | cliphist decode | wl-copy</command></action>
+    </keybind>
+
+    <!-- Monitor del sistema -->
+    <keybind key="C-S-Escape">
+      <action name="Execute"><command>foot -e btop</command></action>
+    </keybind>
+
+    <!-- Capturas de pantalla (xdg-user-dir: funciona con Imágenes o Pictures) -->
+    <keybind key="Print">
+      <action name="Execute"><command>sh -c 'grim "$(xdg-user-dir PICTURES)/captura-$(date +%Y%m%d-%H%M%S).png"'</command></action>
+    </keybind>
+    <keybind key="S-Print">
+      <action name="Execute"><command>sh -c 'grim -g "$(slurp)" "$(xdg-user-dir PICTURES)/captura-$(date +%Y%m%d-%H%M%S).png"'</command></action>
+    </keybind>
+    <!-- Área al portapapeles, sin guardar archivo -->
+    <keybind key="C-Print">
+      <action name="Execute"><command>sh -c 'grim -g "$(slurp)" - | wl-copy'</command></action>
+    </keybind>
+
+    <!-- Sesión / bloqueo -->
+    <keybind key="W-S-l">
+      <action name="Execute"><command>swaylock</command></action>
+    </keybind>
+    <keybind key="W-Escape">
+      <action name="Execute"><command>wlogout</command></action>
+    </keybind>
+
+    <!-- Audio (wpctl: respeta el límite del 100%) y brillo -->
+    <keybind key="XF86AudioRaiseVolume">
+      <action name="Execute"><command>wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+</command></action>
+    </keybind>
+    <keybind key="XF86AudioLowerVolume">
+      <action name="Execute"><command>wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-</command></action>
+    </keybind>
+    <keybind key="XF86AudioMute">
+      <action name="Execute"><command>wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle</command></action>
+    </keybind>
+    <keybind key="XF86AudioMicMute">
+      <action name="Execute"><command>wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle</command></action>
+    </keybind>
+    <keybind key="XF86MonBrightnessUp">
+      <action name="Execute"><command>brightnessctl set +5%</command></action>
+    </keybind>
+    <!-- min-value=1: evita que bajar el brillo apague la pantalla del todo -->
+    <keybind key="XF86MonBrightnessDown">
+      <action name="Execute"><command>brightnessctl --min-value=1 set 5%-</command></action>
+    </keybind>
+
+    <!-- Gestión de ventanas -->
+    <keybind key="W-q">
+      <action name="Close"/>
+    </keybind>
+    <keybind key="A-Tab">
+      <action name="NextWindow"/>
+    </keybind>
+    <keybind key="A-S-Tab">
+      <action name="PreviousWindow"/>
+    </keybind>
+    <keybind key="W-f">
+      <action name="ToggleMaximize"/>
+    </keybind>
+    <keybind key="W-S-f">
+      <action name="ToggleFullscreen"/>
+    </keybind>
+
+    <!-- Organización direccional (snapping) -->
+    <keybind key="W-h">
+      <action name="SnapToEdge"><direction>left</direction></action>
+    </keybind>
+    <keybind key="W-j">
+      <action name="SnapToEdge"><direction>down</direction></action>
+    </keybind>
+    <keybind key="W-k">
+      <action name="SnapToEdge"><direction>up</direction></action>
+    </keybind>
+    <keybind key="W-l">
+      <action name="SnapToEdge"><direction>right</direction></action>
+    </keybind>
+
+    <!-- Escritorios virtuales: W-n va al escritorio, W-S-n envía la ventana -->
+    <keybind key="W-1">
+      <action name="GoToDesktop"><to>1</to></action>
+    </keybind>
+    <keybind key="W-2">
+      <action name="GoToDesktop"><to>2</to></action>
+    </keybind>
+    <keybind key="W-3">
+      <action name="GoToDesktop"><to>3</to></action>
+    </keybind>
+    <keybind key="W-4">
+      <action name="GoToDesktop"><to>4</to></action>
+    </keybind>
+    <keybind key="W-S-1">
+      <action name="SendToDesktop"><to>1</to><follow>no</follow></action>
+    </keybind>
+    <keybind key="W-S-2">
+      <action name="SendToDesktop"><to>2</to><follow>no</follow></action>
+    </keybind>
+    <keybind key="W-S-3">
+      <action name="SendToDesktop"><to>3</to><follow>no</follow></action>
+    </keybind>
+    <keybind key="W-S-4">
+      <action name="SendToDesktop"><to>4</to><follow>no</follow></action>
+    </keybind>
+
+    <!-- Reconfigurar / salir -->
+    <keybind key="W-S-r">
+      <action name="Reconfigure"/>
+    </keybind>
+    <keybind key="W-S-e">
+      <action name="Exit"/>
+    </keybind>
+  </keyboard>
+
+  <!-- <default/> ya incluye mover/maximizar desde la barra de título;
+       solo se repite el menú del escritorio. -->
+  <mouse>
+    <default/>
+    <context name="Root">
+      <mousebind button="Right" action="Press">
+        <action name="ShowMenu"><menu>root-menu</menu></action>
+      </mousebind>
+    </context>
+  </mouse>
+
+</labwc_config>

@@ -1,0 +1,92 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 36,
+    "margin": 0,
+    "spacing": 0,
+    "reload_style_on_change": true,
+
+    "modules-left": ["custom/logo", "wlr/taskbar"],
+    "modules-center": ["clock"],
+    "modules-right": ["tray", "network", "pulseaudio", "battery", "custom/user", "custom/power"],
+
+    "custom/logo": {
+        "format": "󰣇",
+        "tooltip": false,
+        // Segundo clic cierra wofi en vez de abrir otra instancia
+        "on-click": "pkill wofi || wofi --show drun"
+    },
+
+    "wlr/taskbar": {
+        "format": "{icon} {name}",
+        "icon-size": 16,
+        "icon-theme": "Papirus",
+        "tooltip-format": "{title}",
+        "on-click": "activate",
+        "on-click-middle": "close",
+        "all-outputs": true,
+        "markup": true
+    },
+
+    "tray": {
+        "icon-size": 16,
+        "spacing": 8
+    },
+
+    "clock": {
+        // Índice explícito {0:...}: es la forma segura de repetir la fecha
+        "format": "{0:%H:%M}  ·  {0:%a %d %b}",
+        "tooltip-format": "<big>{:%Y-%m-%d}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+
+    "network": {
+        "format-wifi": "{icon}",
+        "format-ethernet": "󰈀",
+        "format-disconnected": "󰖪",
+        "format-icons": ["󰤟", "󰤢", "󰤥", "󰤨"],
+        "tooltip-format-wifi": "{essid}  ·  {signalStrength}%",
+        "tooltip-format-ethernet": "{ifname}  ·  {ipaddr}",
+        "tooltip-format-disconnected": "sin conexión",
+        // cmst no está en repos oficiales; si falta, abre connmanctl en foot
+        "on-click": "cmst || foot -e connmanctl"
+    },
+
+    "pulseaudio": {
+        "format": "{icon}",
+        "format-muted": "󰝟",
+        "format-icons": {
+            "default": ["󰕿", "󰖀", "󰕾"]
+        },
+        "tooltip-format": "{volume}%",
+        "on-click": "pavucontrol",
+        "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "scroll-step": 5
+    },
+
+    "battery": {
+        "format": "{icon}  {capacity}%",
+        "format-charging": "󰂄  {capacity}%",
+        "format-plugged": "󰚥  {capacity}%",
+        "format-full": "󰁹  {capacity}%",
+        "format-icons": ["󰁺", "󰁼", "󰁾", "󰂀", "󰂂"],
+        "tooltip-format": "{timeTo}",
+        "states": {
+            "warning": 30,
+            "critical": 15
+        }
+    },
+
+    "custom/user": {
+        "format": "󰀄",
+        "tooltip-format": "{}",
+        "exec": "whoami",
+        "interval": "once",
+        "on-click": "swaylock"
+    },
+
+    "custom/power": {
+        "format": "󰐥",
+        "on-click": "pkill wlogout || wlogout",
+        "tooltip": false
+    }
+}

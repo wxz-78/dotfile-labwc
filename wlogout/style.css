@@ -1,0 +1,40 @@
+/* ============================================================
+   INK · wlogout
+   Fondo casi negro, botones como sellos de tinta.
+   Los iconos son glifos Nerd Font en layout (sin imágenes).
+   ============================================================ */
+
+* {
+    font-family: "JetBrainsMono Nerd Font", "DejaVuSansM Nerd Font", monospace;
+    background-image: none;
+    box-shadow: none;
+    transition: 180ms ease;
+}
+
+window {
+    background-color: rgba(4, 4, 4, 0.92);
+}
+
+button {
+    color: #d8d8d8;
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 20px;
+    margin: 22px;
+    font-size: 22px;
+    font-weight: 600;
+    outline-style: none;
+}
+
+/* Foco por teclado: solo un borde más marcado */
+button:focus {
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+/* Ratón / pulsado: sello invertido */
+button:hover,
+button:active {
+    color: #0a0a0a;
+    background-color: #f2f2f2;
+    border: 1px solid #ffffff;
+}

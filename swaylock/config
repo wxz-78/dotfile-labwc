@@ -1,0 +1,71 @@
+# ============================================================
+# INK · swaylock
+# Fondo casi negro, círculo de entrada como sello de tinta.
+# Solo opciones de swaylock "vanilla" (el paquete que tienes).
+# Una opción desconocida en este archivo hace que swaylock
+# falle al arrancar, y entonces la pantalla NO se bloquea.
+# ============================================================
+
+daemonize
+ignore-empty-password
+show-failed-attempts
+
+# círculo siempre visible (en reposo también)
+indicator-idle-visible
+indicator-caps-lock
+indicator-radius=110
+indicator-thickness=10
+
+# colores base
+color=0a0a0a
+font=JetBrainsMono Nerd Font
+font-size=22
+
+# reposo
+inside-color=0a0a0aCC
+ring-color=ffffff33
+line-color=00000000
+text-color=e8e8e8
+separator-color=00000000
+
+# escribiendo
+key-hl-color=ffffff
+bs-hl-color=b07a7a
+inside-key-color=1a1a1aCC
+ring-key-color=ffffffB0
+text-key-color=ffffff
+
+# verificando
+inside-ver-color=1a1a1aCC
+ring-ver-color=ffffff80
+line-ver-color=00000000
+text-ver-color=ffffff
+
+# borrado total (tras backspace hasta vaciar)
+inside-clear-color=1a1a1aCC
+ring-clear-color=b07a7a
+line-clear-color=00000000
+text-clear-color=ffffff
+
+# contraseña incorrecta
+inside-wrong-color=0a0a0aCC
+ring-wrong-color=b07a7a
+line-wrong-color=00000000
+text-wrong-color=ffffff
+
+# caps lock
+inside-caps-lock-color=1a1a1aCC
+ring-caps-lock-color=c7ac78
+line-caps-lock-color=00000000
+text-caps-lock-color=e8e8e8
+
+# distribución de teclado
+layout-bg-color=0a0a0aCC
+layout-border-color=ffffff26
+layout-text-color=e8e8e8
+
+# --- Solo si instalas swaylock-effects (AUR), descomenta: ---
+# fade-in=0.25
+# grace=1
+# grace-no-mouse
+# grace-no-touch

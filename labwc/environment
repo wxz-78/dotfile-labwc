@@ -1,0 +1,46 @@
+# ~/.config/labwc/environment
+# Variables KEY=VALUE, una por línea. labwc las carga antes de iniciar
+# el compositor y las exporta al resto de la sesión.
+# Sesión con elogind: XDG_RUNTIME_DIR lo crea PAM y libseat usa logind solo.
+# NO definas LIBSEAT_BACKEND=seatd ni XDG_RUNTIME_DIR a mano en ~/.bash_profile.
+
+# --- Entorno base Wayland / labwc ---
+# XDG_CURRENT_DESKTOP es el que usan los portales XDG para elegir backend.
+# Lista separada por ':'; "wlroots" es lo que hace casar xdg-desktop-portal-wlr
+# (capturas/compartir pantalla). Con solo "labwc" ese portal no se selecciona.
+XDG_CURRENT_DESKTOP=labwc:wlroots
+XDG_SESSION_TYPE=wayland
+XDG_SESSION_DESKTOP=labwc
+
+# --- Navegadores y apps web (Firefox/LibreWolf, Electron) ---
+MOZ_ENABLE_WAYLAND=1
+ELECTRON_OZONE_PLATFORM_HINT=auto
+
+# --- Toolkits (GTK, Qt) ---
+GDK_BACKEND=wayland,x11
+QT_QPA_PLATFORM=wayland;xcb
+QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+# Tema Qt con qt5ct/qt6ct (solo admite uno; elige según tus apps Qt):
+# QT_QPA_PLATFORMTHEME=qt6ct
+
+# --- SDL / Java ---
+SDL_VIDEODRIVER=wayland,x11
+_JAVA_AWT_WM_NONREPARENTING=1
+
+# --- Gráficos Intel y aceleración de video ---
+# iHD = intel-media-driver (VA-API).
+# Quitados: MESA_LOADER_DRIVER_OVERRIDE=iris (ya es el driver por defecto
+# en Intel moderno; forzarlo solo sirve para romper cosas si cambias de
+# hardware) y VDPAU_DRIVER=va_gl (VDPAU no se usa en Wayland).
+# CLUTTER_BACKEND tampoco: Clutter está abandonado.
+LIBVA_DRIVER_NAME=iHD
+
+# --- Apariencia ---
+XCURSOR_SIZE=24
+XCURSOR_THEME=Bibata-Modern-Classic
+
+# --- Teclado ---
+XKB_DEFAULT_LAYOUT=latam
+XKB_DEFAULT_VARIANT=deadtilde
+# XKB_DEFAULT_OPTIONS=grp:alt_shift_toggle
+# XKB_DEFAULT_OPTIONS=ctrl:nocaps

@@ -1,0 +1,72 @@
+#!/bin/sh
+# ~/.config/labwc/autostart
+# Se ejecuta UNA vez al iniciar la sesión de labwc (no al recargar con
+# Reconfigure). labwc lo lanza con `sh`: nada de construcciones bash-only.
+
+# --- Entorno D-Bus (sin systemd) ---
+# Síncrono (sin &): lo que viene después necesita ya las variables.
+dbus-update-activation-environment --all
+
+# --- Directorios de usuario ---
+# Antes que nada y de forma síncrona: más abajo se comprueba si existe el
+# fondo de pantalla dentro de una de estas carpetas.
+xdg-user-dirs-update
+
+# --- Limpieza (por si reinicias labwc sin cerrar sesión) ---
+killall -q waybar mako swaybg swayidle udiskie blueman-applet kanshi \
+    lxqt-policykit-agent wl-paste wl-clip-persist xdg-desktop-portal-wlr \
+    xdg-desktop-portal-gtk xdg-desktop-portal
+
+# --- Audio ---
+# Con elogind no hay dinit de usuario, así que PipeWire se lanza desde aquí.
+# Solo arranca lo que no esté ya corriendo.
+pgrep -x pipewire >/dev/null       || pipewire &
+pgrep -x wireplumber >/dev/null    || ( sleep 1 && wireplumber ) &
+pgrep -x pipewire-pulse >/dev/null || ( sleep 1 && pipewire-pulse ) &
+
+# --- Portales XDG ---
+# Sin systemd conviene arrancarlos con retraso y en orden (backends antes
+# que el frontend) para evitar condiciones de carrera.
+( sleep 1 && /usr/lib/xdg-desktop-portal-wlr ) &
+( sleep 2 && /usr/lib/xdg-desktop-portal-gtk ) &
+( sleep 3 && /usr/lib/xdg-desktop-portal ) &
+
+# --- Autenticación y pantallas ---
+lxqt-policykit-agent &
+kanshi &
+
+# Brillo inicial. Cambia el % a tu gusto (o borra la línea).
+brightnessctl -q set 10%
+
+# --- Tema de aplicaciones GTK ---
+gsettings set org.gnome.desktop.interface icon-theme 'Papirus' 2>/dev/null
+gsettings set org.gnome.desktop.interface cursor-theme 'Bibata-Modern-Classic' 2>/dev/null
+gsettings set org.gnome.desktop.interface cursor-size 24 2>/dev/null
+gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' 2>/dev/null
+
+# --- Fondo, barra y notificaciones ---
+# Si la imagen no existe, cae a un color liso en vez de dejar el fondo roto.
+if [ -f "$HOME/Pinturas/3.png" ]; then
+    swaybg -i "$HOME/Pinturas/3.png" -m fill &
+else
+    swaybg -c 0a0a0a &
+fi
+waybar &
+mako &
+
+# --- Utilidades ---
+# Historial de portapapeles
+wl-paste --type text --watch cliphist store &
+wl-paste --type image --watch cliphist store &
+# Mantiene el contenido del portapapeles al cerrar la app que lo copió
+wl-clip-persist --clipboard regular &
+
+# Bloqueo por inactividad. swaylock -f: sin él, before-sleep se queda
+# esperando a que desbloquees y el equipo no llega a suspenderse.
+swayidle -w \
+    timeout 300 'swaylock -f' \
+    before-sleep 'swaylock -f' &
+
+# Dispositivos extraíbles y bluetooth (los iconos salen en el tray de waybar)
+udiskie --tray --appindicator &
+blueman-applet &
